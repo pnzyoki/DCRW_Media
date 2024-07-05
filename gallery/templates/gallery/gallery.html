@@ -1,0 +1,35 @@
+{% extends 'gallery/base.html' %}
+
+{% block content %}
+    <h1>Photo Gallery</h1>
+    
+    <section class="highlights">
+        <h2>Weekly Highlights</h2>
+        <div class="slider-container">
+            <div class="slider">
+                {% for highlight in highlights %}
+                    <div class="slide">
+                        <img src="{{ highlight.photo.image.url }}" alt="{{ highlight.photo.title }}">
+                        <div class="slide-caption">{{ highlight.photo.title }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="slider-button prev">&lt;</button>
+            <button class="slider-button next">&gt;</button>
+        </div>
+    </section>
+
+    <section class="all-photos">
+        <h2>All Photos</h2>
+        <div class="photo-grid">
+            {% for photo in photos %}
+                <div class="photo-item">
+                    <a href="{% url 'photo_detail' photo.id %}">
+                        <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+                        <div class="photo-caption">{{ photo.title }}</div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

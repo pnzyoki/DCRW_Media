@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Photo Gallery{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{% url 'gallery' %}">Home</a></li>
+                {% if user.is_superuser %}
+                    <li><a href="{% url 'upload_photo' %}">Upload Photo</a></li>
+                {% endif %}
+                <li><a href="{% url 'contact_admin_email' %}">Contact (Email)</a></li>
+                <li><a href="{% url 'contact_admin_whatsapp' %}">Contact (WhatsApp)</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; {% now "Y" %} DCRW_Media. All rights reserved.</p>
+    </footer>
+
+    <script src="{% static 'js/slider.js' %}"></script>
+</body>
+</html>

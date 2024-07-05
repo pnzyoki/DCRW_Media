@@ -1,0 +1,23 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}Upload Photo - Photo Gallery{% endblock %}
+
+{% block content %}
+    <h1>Upload Photo</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="image">Image:</label>
+            <input type="file" id="image" name="image" accept="image/*" required>
+        </div>
+        <div>
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div>
+            <label for="description">Description:</label>
+            <textarea id="description" name="description"></textarea>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,31 @@
+<a href="{% url 'download_photo' photo.id %}" class="download-button">Download Photo</a>
+{% extends 'gallery/base.html' %}
+
+{% block title %}{{ photo.title }} - Photo Gallery{% endblock %}
+
+{% block content %}
+    <h1>{{ photo.title }}</h1>
+    <div class="photo-detail">
+        <img src="{{ photo.image.url }}" alt="{{ photo.title }}">
+        <p>{{ photo.description }}</p>
+        <p>Uploaded by: {{ photo.uploader.username }} on {{ photo.upload_date }}</p>
+        <a href="{% url 'download_photo' photo.id %}" class="download-button">Download Photo</a>
+    </div>
+    
+    {% if photo.faces.exists %}
+        <div class="similar-faces">
+            <h2>Similar Faces</h2>
+            <ul>
+                {% for face in photo.faces.all %}
+                    <li>
+                        {% if face.name %}
+                            {{ face.name }}
+                        {% else %}
+                            Unnamed Face {{ face.id }}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
