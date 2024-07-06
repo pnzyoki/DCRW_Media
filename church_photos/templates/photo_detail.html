@@ -1,18 +1,45 @@
 {% extends 'base.html' %}
+
 {% block content %}
 <div class="container mx-auto px-4">
     <h1 class="text-3xl font-bold underline">{{ photo.description }}</h1>
     <img src="{{ photo.image.url }}" class="img-fluid" alt="...">
     <h2>Comments</h2>
-    <form method="post">
+    <form method="post" action="{% url 'gallery:add_comment' photo.id %}">
         {% csrf_token %}
-        {{ form.as_p }}
+        <textarea name="comment" required></textarea>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <ul>
-        {% for rating in photo.rating_set.all %}
-        <li>{{ rating.user.username }}: {{ rating.comment }} ({{ rating.rating }})</li>
+    <div class="comments">
+        {% for comment in photo.comment_set.all %}
+        <div class="comment">
+            <p>{{ comment.user.username }}: {{ comment.comment }}</p>
+            <button onclick="showReplyForm({{ comment.id }})">Reply</button>
+            <form method="post" action="{% url 'gallery:add_comment' photo.id %}" id="reply-form-{{ comment.id }}" style="display: none;">
+                {% csrf_token %}
+                <textarea name="comment" required></textarea>
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <!-- Like Button -->
+            <form method="post" action="{% url 'gallery:like_comment' comment.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link">{{ comment.likes.count }} Likes</button>
+            </form>
+            <!-- Display Replies -->
+            {% for reply in comment.replies.all %}
+            <div class="reply">
+                <p>{{ reply.user.username }}: {{ reply.comment }}</p>
+            </div>
+            {% endfor %}
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
+
+<script>
+function showReplyForm(commentId) {
+    document.getElementById('reply-form-' + commentId).style.display = 'block';
+}
+</script>
 {% endblock %}
