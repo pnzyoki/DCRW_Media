@@ -44,3 +44,13 @@ def send_whatsapp_message(to, message):
         to=f'whatsapp:{to}'
     )
     return message.sid
+
+@login_required
+def admin_dashboard(request):
+    total_photos = Photo.objects.count()
+    total_ratings = Rating.objects.count()
+    context = {
+        'total_photos': total_photos,
+        'total_ratings': total_ratings,
+    }
+    return render(request, 'dashboard.html', context)
