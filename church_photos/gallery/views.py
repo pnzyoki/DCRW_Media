@@ -37,7 +37,7 @@ def photo_detail(request, photo_id):
         form = RatingForm()
     return render(request, 'photo_detail.html', {'photo': photo, 'form': form})
 
-def home(request):
+def home_view(request):
     return render(request, 'home.html')
 
 def send_whatsapp_message(to, message):
