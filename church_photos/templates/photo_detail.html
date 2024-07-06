@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold underline">{{ photo.description }}</h1>
+    <img src="{{ photo.image.url }}" class="img-fluid" alt="...">
+    <h2>Comments</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <ul>
+        {% for rating in photo.rating_set.all %}
+        <li>{{ rating.user.username }}: {{ rating.comment }} ({{ rating.rating }})</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}
