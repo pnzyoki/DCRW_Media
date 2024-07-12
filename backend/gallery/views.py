@@ -10,11 +10,11 @@ class PhotViewSet(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser, FormParser]
 
     def create(self, request, *args, **kwargs):
-        image = request.FILES.getlist('images')
-        description = request.data.getlist('description')
+        images = request.FILES.getlist('images')
+        description = request.data.getlist('descriptions')
         photos = []
 
-        for i, image in enumerate(image):
+        for i, image in enumerate(images):
             description =description[i] if description else ""
             photo = Photo(image=image, description=description)
             photo.save()
