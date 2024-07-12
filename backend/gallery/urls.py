@@ -4,6 +4,7 @@ from .views import *
 
 router = DefaultRouter()
 router.register(r'photos', PhotViewSet, basename='photo')
+router.register(r'comments', CommentViewSet, basename='comment')
 
 urlpatterns = [
     path('', include(router.urls)),

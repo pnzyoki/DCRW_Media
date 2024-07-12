@@ -22,3 +22,7 @@ class PhotViewSet(viewsets.ModelViewSet):
         
         serializer  = self.get_serializer(photos, many=True)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+    
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
