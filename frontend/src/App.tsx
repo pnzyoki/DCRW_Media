@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Home from './pages/Home';
-import Admin from './pages/Admin';
+import Home from './pages/Landing';
+import Admin from './pages/Dashboard';
 
 const App: React.FC = () => {
   return (

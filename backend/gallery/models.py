@@ -1,14 +1,11 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-class Photo(models.Model):
-    image = models.ImageField(upload_to='photo/')
-    uploaded_at = models.DateTimeField(auto_now_add=True)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self):
-        return f"Photo {self.id} - {self.uploaded_at}"
+class Picture(models.Model):
+    image = models.ImageField(upload_to='pictures/')
+    upload_date = models.DateTimeField(auto_now_add=True)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    review = models.TextField(blank=True, null=True)
     
-class Comment(models.Model):
-    photo = models.ForeignKey(Photo, related_name='comments', on_delete=models.CASCADE)
-    text = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"Picture {self.id} uploaded by {self.uploaded_by.username}"
