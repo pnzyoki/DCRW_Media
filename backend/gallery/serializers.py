@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import *
+from .models import Picture
 
-class PhotoSerializer(serializers.ModelSerializer):
+class PictureSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Photo
-        fields = ['id', 'image', 'uploaded_at', 'description']
+        model = Picture
+        fields = '__all__'
