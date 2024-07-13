@@ -1,15 +1,19 @@
-from rest_framework import viewsets
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Picture
-from .serializers import PictureSerializer
-from rest_framework.permissions import IsAuthenticated
+from .forms import PictureForm
 
-class PictureViewSet(viewsets.ModelViewSet):
-    queryset = Picture.objects.all().order_by('-upload_date')
-    serializer_class = PictureSerializer
+def home(request):
+    pictures = Picture.objects.all().order_by('-upload_date')
+    return render(request, 'home.html', {'pictures': pictures})
 
-    def get_permissions(self):
-        if self.action in ['create', 'update', 'partial_update', 'destroy']:
-            self.permission_classes = [IsAuthenticated,]
-        else:
-            self.permission_classes = []
-        return super().get_permissions()
+@login_required
+def upload_picture(request):
+    if request.method == 'POST':
+        form = PictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = PictureForm()
+    return render(request, 'upload.html', {'form': form})
